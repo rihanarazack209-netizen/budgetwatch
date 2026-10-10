@@ -1,5 +1,5 @@
-import { Component, computed } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
@@ -215,8 +215,10 @@ export class MainLayoutComponent {
     return map[this.auth.currentUser()?.role || ''] || '';
   }
 
+  router = inject(Router);
+
   getPageTitle(): string {
-    const url = window.location.pathname;
+    const url = this.router.url.split('?')[0];
     const map: any = {
       '/dashboard': 'Dashboard',
       '/budgets': 'Budget Management',
